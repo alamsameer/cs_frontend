@@ -20,7 +20,7 @@ const navigate=useNavigate()
     setIsLoading(true)
     const {username,password}=input
     console.log({username,password})
-    const res=await axios.post('http://localhost:4000/api/admin/signin',{username,password})
+    const res=await axios.post('https://coldstorage-backend.vercel.app/api/admin/signin',{username,password})
     setIsLoading(false)
     localStorage.setItem('cstoken',res.data.token)
     navigate('/')
