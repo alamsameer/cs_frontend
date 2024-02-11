@@ -5,7 +5,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
-import { toast } from "@/components/ui/use-toast"// import { CalendarIcon } from "@radix-ui/react-icons"
+// import { toast } from "@/components/ui/use-toast"; // import { CalendarIcon } from "@radix-ui/react-icons"
 import { format } from "date-fns";
 import {
   Form,
@@ -29,47 +29,56 @@ import {
 } from "@/components/ui/popover";
 import { Input } from "@/components/ui/input";
 import { Calendar } from "@/components/ui/calendar";
+import axios from "axios";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const formSchema = z.object({
   date: z.date({
-    required_error: "A date of birth is required.",
+    required_error: "A date is required",
   }),
   party: z.string(),
   category: z.string(),
-//   weight: z.number().optional(),
-//   rate: z.number(),
-//   rent: z.number(),
-//   rentStatus: z.boolean().default(false),
-//   lotNumber: z.string(),
-//   quantity: z.number(),
-//   remainingQuantity: z.number(),
-//   location: z.string().optional(),
-//   remarks: z.string().optional(),
-//   additionalCharges: z.number().default(0),
+  weight: z.coerce.number().optional(),
+  rate: z.coerce.number(),
+  rent:z.coerce.number(),
+  rentStatus: z.string().default("false"),
+  lotNumber: z.string(),
+  quantity: z.coerce.number(),
+  //   remainingQuantity: z.number(),
+  location: z.string().optional(),
+  remarks: z.string().optional(),
+  //   additionalCharges: z.number().default(0),
 });
 
 export default function InwardForm() {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
   });
-
-  function onSubmit(data: z.infer<typeof formSchema>) {
-    toast({
-      title: "You submitted the following values:",
-      description: (
-        <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-          <code className="text-white">{JSON.stringify(data)}</code>
-        </pre>
-      ),
+  const accessToken = localStorage.getItem("cstoken");
+  async function onSubmit(data: z.infer<typeof formSchema>) {
+   try{
+    const res = await axios.post('http://localhost:4000/api/movein', data, {
+      headers: {
+        Authorization: `${accessToken}`
+      }
     });
+    console.log(res);
+    
+    toast.success("Success Notification !");
+    
     console.log("submitted", data);
+   }catch(e){
+    toast.error("not successful");
+   }
   }
 
   return (
+    <>
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="space-y-8 max-w-56"
+        className="space-y-4 max-w-56  lg:w-96"
       >
         <FormField
           control={form.control}
@@ -119,7 +128,7 @@ export default function InwardForm() {
             <FormItem>
               <FormLabel>Category</FormLabel>
               <FormControl>
-                <Input placeholder="shadcn" {...field} />
+                <Input placeholder="Enter category" {...field} className="" />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -139,11 +148,123 @@ export default function InwardForm() {
                 </FormControl>
                 <SelectContent>
                   {/* write fn to get all party dynmaic */}
-                  <SelectItem value="m@example.com">m@example.com</SelectItem>
-                  <SelectItem value="m@google.com">m@google.com</SelectItem>
-                  <SelectItem value="m@support.com">m@support.com</SelectItem>
+                  <SelectItem value="65bb355da7f05137a9bd415c">65bb355da7f05137a9bd415c</SelectItem>
+                  <SelectItem value="65bb355da7f05137a9bd415c">65bb355da7f05137a9bd415c</SelectItem>
                 </SelectContent>
               </Select>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="weight"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>weight</FormLabel>
+              <FormControl>
+                <Input placeholder="enter weight" type="number" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="rate"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>rate</FormLabel>
+              <FormControl>
+                <Input placeholder="rate" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="rent"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>rent</FormLabel>
+              <FormControl>
+                <Input placeholder="rent" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="rentStatus"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>rentStatus</FormLabel>
+              <Select onValueChange={field.onChange} defaultValue={field.value}>
+                <FormControl>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select a rent Status" />
+                  </SelectTrigger>
+                </FormControl>
+                <SelectContent>
+                  {/* write fn to get all party dynmaic */}
+                  <SelectItem value="false">false</SelectItem>
+                  <SelectItem value="true">true</SelectItem>
+                </SelectContent>
+              </Select>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="lotNumber"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>lotNumber</FormLabel>
+              <FormControl>
+                <Input placeholder="lotNumber" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="quantity"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>quantity</FormLabel>
+              <FormControl>
+                <Input placeholder="quantity" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="location"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>location</FormLabel>
+              <FormControl>
+                <Input placeholder="location" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="remarks"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>remarks</FormLabel>
+              <FormControl>
+                <Input placeholder="remarks" {...field} />
+              </FormControl>
               <FormMessage />
             </FormItem>
           )}
@@ -151,5 +272,7 @@ export default function InwardForm() {
         <Button type="submit">Submit</Button>
       </form>
     </Form>
+    <ToastContainer/>
+    </>
   );
 }
