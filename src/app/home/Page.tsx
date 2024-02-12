@@ -7,13 +7,15 @@ const Page: React.FC = () => {
   const [isNavOpen, setIsNavOpen] = useState(true);
   const toggleNav = () => setIsNavOpen(!isNavOpen);
   return (
-    <div className="page-container relative flex w-full min-h-full  h-screen">
+    <div className="page-container overflow-hidden relative flex w-full  h-screen">
       <Sidebar toggleNav={toggleNav} isNavOpen={isNavOpen} />
-      <div className="content-container flex-1">
+      <div className="content-container h-full flex-1">
         {/*  for home route there will be / --> dashboard  */}
         {/* topbar */}
         <Topbar toggleNav={toggleNav} />
-        <Outlet />
+        <div className="h-[90%] overflow-y-scroll">
+          <Outlet />
+        </div>
       </div>
     </div>
   );
