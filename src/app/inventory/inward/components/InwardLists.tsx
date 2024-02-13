@@ -41,42 +41,43 @@ const InwardLists: React.FC = () => {
     };
 
     return (
-        <div className="overflow-x-auto">
-            <table className="min-w-full">
-                <thead>
-                    <tr>
-                        <th>Date</th>
-                        <th>Party</th>
-                        <th>Category</th>
-                        <th>Weight</th>
-                        <th>Rate</th>
-                        <th>Rent</th>
-                        <th>Rent Status</th>
-                        <th>Lot Number</th>
-                        <th>Quantity</th>
-                        <th>Location</th>
-                        <th>Remarks</th>
+        <div className="table_container">
+        <table className="">
+            <thead>
+                <tr>
+                    <th className="px-4 py-2">Date</th>
+                    <th className="px-4 py-2">Party</th>
+                    <th className="px-4 py-2">Category</th>
+                    <th className="px-4 py-2">Weight</th>
+                    <th className="px-4 py-2">Rate</th>
+                    <th className="px-4 py-2">Rent</th>
+                    <th className="px-4 py-2">Rent Status</th>
+                    <th className="px-4 py-2">Lot Number</th>
+                    <th className="px-4 py-2">Quantity</th>
+                    <th className="px-4 py-2">Location</th>
+                    <th className="px-4 py-2">Remarks</th>
+                </tr>
+            </thead>
+            <tbody className="bg-white divide-y divide-gray-200">
+                {data.length > 0 && data.map((item, index) => (
+                    <tr key={index} className={index % 2 === 0 ? 'bg-gray-50' : 'bg-white'}>
+                        <td className="px-4 py-2">{item.date}</td>
+                        <td className="px-4 py-2">{item.party}</td>
+                        <td className="px-4 py-2">{item.category}</td>
+                        <td className="px-4 py-2">{item.weight}</td>
+                        <td className="px-4 py-2">{item.rate}</td>
+                        <td className="px-4 py-2">{item.rent}</td>
+                        <td className="px-4 py-2">{item.rentStatus}</td>
+                        <td className="px-4 py-2">{item.lotNumber}</td>
+                        <td className="px-4 py-2">{item.quantity}</td>
+                        <td className="px-4 py-2">{item.location}</td>
+                        <td className="px-4 py-2">{item.remarks}</td>
                     </tr>
-                </thead>
-                <tbody>
-                    {data.length > 0 && data.map((item, index) => (
-                        <tr key={index}>
-                            <td>{item.date}</td>
-                            <td>{item.party}</td>
-                            <td>{item.category}</td>
-                            <td>{item.weight}</td>
-                            <td>{item.rate}</td>
-                            <td>{item.rent}</td>
-                            <td>{item.rentStatus}</td>
-                            <td>{item.lotNumber}</td>
-                            <td>{item.quantity}</td>
-                            <td>{item.location}</td>
-                            <td>{item.remarks}</td>
-                        </tr>
-                    ))}
-                </tbody>
-            </table>
-        </div>
+                ))}
+            </tbody>
+        </table>
+    </div>
+    
     );
 };
 
