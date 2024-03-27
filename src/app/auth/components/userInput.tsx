@@ -29,10 +29,10 @@ const navigate=useNavigate()
       navigate('/')
       console.log(res.data.token);
     }
-    catch(err){
+    catch(err:unknown) {
       console.log(err);
-      setIsLoading(false)
-      setErrorMessage(`Invalid username or password ${err.message}`)
+      setIsLoading(false);
+      setErrorMessage(`Invalid username or password ${(err as Error).message}`);
     }
   }
   const handleChange=(e:React.ChangeEvent<HTMLInputElement>)=>{
