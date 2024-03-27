@@ -14,17 +14,26 @@ interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> {}
 export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
   const [isLoading, setIsLoading] = useState<boolean>(false)
   const [input,setInput]=useState({username:'',password:''})
+  const [errorMessage,setErrorMessage]=useState('')
 const navigate=useNavigate()
   async function onSubmit(event: React.SyntheticEvent) {
-    event.preventDefault()
-    setIsLoading(true)
-    const {username,password}=input
-    console.log({username,password})
-    const res=await axios.post('http://localhost:4000/api/admin/signin',{username,password})
-    setIsLoading(false)
-    localStorage.setItem('cstoken',res.data.token)
-    navigate('/')
-    console.log(res.data.token);
+    try{
+
+      event.preventDefault()
+      setIsLoading(true)
+      const {username,password}=input
+      console.log({username,password})
+      const res=await axios.post('http://localhost:4000/api/admin/signin',{username,password})
+      setIsLoading(false)
+      localStorage.setItem('cstoken',res.data.token)
+      navigate('/')
+      console.log(res.data.token);
+    }
+    catch(err){
+      console.log(err);
+      setIsLoading(false)
+      setErrorMessage(`Invalid username or password ${err.message}`)
+    }
   }
   const handleChange=(e:React.ChangeEvent<HTMLInputElement>)=>{
     const {name,value}=e.target
@@ -67,6 +76,7 @@ const navigate=useNavigate()
           <Button type="submit" disabled={isLoading}>
             Sign In
           </Button>
+          {errorMessage && <p className="text-red-500">{errorMessage}</p>}
         </div>
       </form>
     </div>

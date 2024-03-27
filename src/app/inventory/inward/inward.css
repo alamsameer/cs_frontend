@@ -1,5 +1,10 @@
 .table_container{
     width:100vw;
     overflow-x:scroll;
+}
 
+@media screen and (max-width: 600px) {
+    .table_container{
+        width:70vw;
+    }
 }

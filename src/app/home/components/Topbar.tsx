@@ -17,9 +17,6 @@ export default function Topbar({ toggleNav }: TopbarProps) {
                 <GiHamburgerMenu className="text-primary bg-secondary" />
               </Button>
             </div>
-            <div className="flex items-center space-x-4">
-              <Button className="hidden md:block">Logout</Button>
-            </div>
           </div>
         </div>
   )
