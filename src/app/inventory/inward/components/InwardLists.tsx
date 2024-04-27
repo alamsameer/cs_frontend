@@ -68,8 +68,7 @@ const InwardLists: React.FC = () => {
           </tr>
         </thead>
         <tbody className="bg-white divide-y divide-gray-200">
-          {data.length > 0 &&
-            data.map((item, index) => (
+          {data && data.map((item, index) => (
               <React.Fragment key={index}>
                 <tr key={index} className="bg-gray-50">
                   <td className="px-4 py-2">{item.date}</td>
