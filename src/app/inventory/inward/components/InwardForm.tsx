@@ -88,12 +88,13 @@ export default function InwardForm() {
   const fetchParties = async () => {
     const token = localStorage.getItem("cstoken");
     try {
-      const response = await axios.get("http://localhost:4000/api/allparty", {
+      const response = await axios.get(`${BACKEND_URL}/api/allparty`, {
         headers: {
           Authorization: `${token}`,
         },
       });
       const data = response.data;
+      console.log("fetching ..");
       setParties(data.parties);
     } catch (error) {
       console.error(error);
@@ -105,7 +106,8 @@ export default function InwardForm() {
     const fetchData = async () => {
       await fetchParties();
     };
-
+    console.log("fetching parties inside");
+    
     fetchData();
   }, []);
 
@@ -121,6 +123,7 @@ export default function InwardForm() {
     calculateTotalRent();
   }, [form,quantity, rate]);
   console.log(total);
+console.log(parties);
 
   return (
     <>
