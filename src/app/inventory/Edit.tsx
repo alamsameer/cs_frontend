@@ -33,7 +33,6 @@ import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useEffect, useState } from "react";
-import {BACKEND_URL} from "@/constant";
 
 const formSchema = z.object({
   date: z.date({
@@ -52,16 +51,34 @@ const formSchema = z.object({
   remarks: z.string().optional(),
   //   additionalCharges: z.number().default(0),
 });
-interface Party {
+
+interface Inventory {
   _id: string;
-  name: string;
-  type: string;
-  address: string;
-  contact: number;
+  date: Date;
   organization: string;
+  party: string;
+  category: string;
+  rate: number;
+  rent: number;
+  rentStatus: boolean;
+  lotNumber: string;
+  quantity: number;
+  remainingQuantity: number;
+  location: string;
+  remarks: string;
+  additionalCharges: number;
   __v: number;
 }
-export default function InwardForm() {
+interface Party {
+    _id: string;
+    name: string;
+    type: string;
+    address: string;
+    contact: number;
+    organization: string;
+    __v: number;
+  }
+export default function InwardForm({ data }: { data: Inventory }) {
   const [parties, setParties] = useState([]);
   const [total, setTotal] = useState(0);
   const form = useForm<z.infer<typeof formSchema>>({
@@ -70,7 +87,7 @@ export default function InwardForm() {
   const accessToken = localStorage.getItem("cstoken");
   async function onSubmit(data: z.infer<typeof formSchema>) {
     try {
-      const res = await axios.post(`${BACKEND_URL}/api/movein`, data, {
+      const res = await axios.post("http://localhost:4000/api/movein", data, {
         headers: {
           Authorization: `${accessToken}`,
         },
@@ -109,17 +126,26 @@ export default function InwardForm() {
     fetchData();
   }, []);
 
-  const [rate=0, quantity=0] = form.watch(["rate", "quantity"]);
-  
+useEffect(() => {
+    // Check if data exists and populate the form fields
+    if (data) {
+        Object.keys(data).forEach((key) => {
+          console.log(key)
+            // form.setValue(key as keyof Inventory, data[key as keyof Inventory]);
+    })}
+}, [data, form]);
+const [rate = 0, quantity = 0] = form.watch(["rate", "quantity"]);
+
   useEffect(() => {
     const calculateTotalRent = () => {
-      const calculatedTotal = parseInt(rate.toString()) *parseInt(quantity.toString());
-      form.setValue('rent', calculatedTotal);
+      const calculatedTotal =
+        parseInt(rate.toString()) * parseInt(quantity.toString());
+      form.setValue("rent", calculatedTotal);
       setTotal(calculatedTotal);
     };
 
     calculateTotalRent();
-  }, [form,quantity, rate]);
+  }, [form, quantity, rate]);
   console.log(total);
 
   return (
