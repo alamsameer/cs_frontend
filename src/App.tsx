@@ -4,6 +4,7 @@ import LoginPage from "./app/auth/LoginPage";
 import Home from "./app/home/Page.tsx";
 import ProtectedRoute from "./app/utils/ProtectedRoute.tsx";
 import Inventory from "./app/inventory/Inventory.tsx";
+import Dashboard from "./app/dashboard/page.tsx";
 // Component for the 404 Not Found page
 const NotFound = () => <h2>404 - Page Not Found</h2>;
 function App() {
@@ -11,7 +12,7 @@ function App() {
     <Routes>
       <Route element={<ProtectedRoute />}>
         <Route path="/" element={<Home />}>
-          <Route index element={<h1>Dashboard</h1>}></Route>
+          <Route index element={<Dashboard/>}></Route>
           <Route path="/trade" element={<h1>trade</h1>} />
           <Route path="/inventory" element={<Inventory />} />
         </Route>

@@ -77,7 +77,7 @@ const InwardLists: React.FC = () => {
                   <td className="px-4 py-2">{item.weight}</td>
                   <td className="px-4 py-2">{item.rate}</td>
                   <td className="px-4 py-2">{item.rent}</td>
-                  <td className="px-4 py-2">{item.rentStatus}</td>
+                  <td className="px-4 py-2">{item.rentStatus ?"paid":"Not paid"}</td>
                   <td className="px-4 py-2">{item.lotNumber}</td>
                   <td className="px-4 py-2">{item.quantity}</td>
                   <td className="px-4 py-2">{item.location}</td>
