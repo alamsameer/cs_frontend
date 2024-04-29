@@ -88,7 +88,7 @@ export default function InwardForm() {
   const fetchParties = async () => {
     const token = localStorage.getItem("cstoken");
     try {
-      const response = await axios.get(`${BACKEND_URL}/api/allparty`, {
+      const response = await axios.get(`${BACKEND_URL}/allparty`, {
         headers: {
           Authorization: `${token}`,
         },

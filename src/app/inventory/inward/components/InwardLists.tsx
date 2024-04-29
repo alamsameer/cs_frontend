@@ -33,7 +33,7 @@ const InwardLists: React.FC = () => {
       const accessToken = localStorage.getItem("cstoken");
 
       const response = await axios.get(
-      `${BACKEND_URL}/api/movedinitems`,
+      `${BACKEND_URL}/movedinitems`,
         {
           headers: {
             Authorization: `${accessToken}`,
@@ -71,7 +71,7 @@ const InwardLists: React.FC = () => {
           {data && data.map((item, index) => (
               <React.Fragment key={index}>
                 <tr key={index} className="bg-gray-50">
-                  <td className="px-4 py-2">{item.date}</td>
+                  <td className="px-4 py-2">{new Date(item.date).toLocaleDateString()}</td>
                   <td className="px-4 py-2">{item.party.name}</td>
                   <td className="px-4 py-2">{item.category}</td>
                   <td className="px-4 py-2">{item.weight}</td>
