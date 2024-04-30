@@ -14,7 +14,7 @@ export default function Topbar({ toggleNav }: TopbarProps) {
                 aria-label="toggle nav"
                 className="bg-secondary"
               >
-                <GiHamburgerMenu className="text-primary bg-secondary" />
+                <GiHamburgerMenu className="text-sky-600 bg-secondary" />
               </Button>
             </div>
           </div>
